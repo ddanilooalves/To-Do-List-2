@@ -5,23 +5,74 @@ const homePersonagemController = (req, res) => {
 };
 
 const findPersonagemController = (req, res) => {
-  res.send(personagemService.findPersonagemService());
+  const perso = personagemService.findPersonagemService()
+  if (perso.length == 0) {
+    return res.status(404).send({ message: "Não há nenhum personagem cadastrado!" });
+  };
+
+  res.send(perso);
 };
 
 const findPersonagemByIdController = (req, res) => {
-  res.send(personagemService.findPersonagemByIdService(req.params.id));
+  const param = Number(req.params.id);
+
+  if (!param) {
+    return res.status(400).send({ message: "ID inválido!" });
+  };
+
+  const sis = personagemService.findPersonagemByIdService(param);
+
+  if (!sis) {
+    return res.status(404).send({ message: "Personagem não foi encontrado!" });
+  };
+
+  res.send(sis)
 };
 
 const createPersonagemController = (req, res) => {
-  res.send(personagemService.createPersonagemService(req.body));
+  const personagem = req.body;
+
+  if (!personagem 
+    || !personagem.id
+    || !personagem.nome
+    || !personagem.membro
+    || !personagem.foto
+    ) {
+    return res.status(400).send({ message: "Informe todos os campos personagem completo!" });
+  };
+
+  res.status(201).send(personagemService.createPersonagemService(personagem));
+
 };
 
 const updatePersonagemPaletaController = (req, res) => {
-  res.send(personagemService.updatePersonagemService(+req.params.id, req.body));
+  const param = Number(req.params.id);
+
+    if (!param) {
+      return res.status(400).send({ message: "ID inválido!" });
+    };
+
+  const per = req.body;
+
+  if (!per 
+    || !per.id
+    || !per.nome
+    || !per.membro
+    || !per.foto
+    ) {
+    return res.status(400).send({ message: "Informe todos os campos do personagem completo!" });
+  };
+  res.send(personagemService.updatePersonagemService(param, per));
 };
 
 const deletePersonagemController = (req, res) => {
-  personagemService.deletePersonagemService(req.params.id);
+  const param = Number(req.params.id);
+
+  if (!param) {
+    return res.status(400).send({ message: "ID inválido!" });
+  };
+
+  personagemService.deletePersonagemService(param);
   res.send({ message: 'Personagem deletado(a) com sucesso!' });
 };
 
