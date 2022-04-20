@@ -1,12 +1,12 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
-const PersonagemSchema = new mongooose.Schema({
+const PersonagemSchema = new mongoose.Schema({
     id: { type: Number, required: true },
     nome: { type: String, required: true },
     membro: { type: String, required: true },
     foto: { type: String, required: true },
   });
 
-const Personagem = mongooose.model('personagem', PersonagemSchema);
+const Personagem = mongoose.model('personagem', PersonagemSchema);
 
 module.exports = Personagem;

@@ -5,7 +5,7 @@ const homePersonagemController = (req, res) => {
 };
 
 const findPersonagemController = async (req, res) => {
-  const perso = await personagemService.findPersonagemService()
+  const perso = await personagemService.findPersonagemService();
   if (perso.length == 0) {
     return res.status(404).send({ message: "Não há nenhum personagem cadastrado!" });
   };
@@ -15,8 +15,9 @@ const findPersonagemController = async (req, res) => {
 const findPersonagemByIdController = async (req, res) => {
   const param = Number(req.params.id);
 
-  if (!param) {
-    return res.status(400).send({ message: "ID inválido!" });
+  if (!mongoose.types.ObjectId.isValid(param)) {
+    res.status(400).send({ message: "ID inválido!" });
+    return;
   };
 
   const sis = await personagemService.findPersonagemByIdService(param);
