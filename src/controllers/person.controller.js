@@ -4,23 +4,22 @@ const homePersonagemController = (req, res) => {
   res.send("home personagens");
 };
 
-const findPersonagemController = (req, res) => {
-  const perso = personagemService.findPersonagemService()
+const findPersonagemController = async (req, res) => {
+  const perso = await personagemService.findPersonagemService()
   if (perso.length == 0) {
     return res.status(404).send({ message: "Não há nenhum personagem cadastrado!" });
   };
-
   res.send(perso);
 };
 
-const findPersonagemByIdController = (req, res) => {
+const findPersonagemByIdController = async (req, res) => {
   const param = Number(req.params.id);
 
   if (!param) {
     return res.status(400).send({ message: "ID inválido!" });
   };
 
-  const sis = personagemService.findPersonagemByIdService(param);
+  const sis = await personagemService.findPersonagemByIdService(param);
 
   if (!sis) {
     return res.status(404).send({ message: "Personagem não foi encontrado!" });

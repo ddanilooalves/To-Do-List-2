@@ -1,34 +1,39 @@
-const personagem = [
-    {
-      id: 1,
-      nome: 'Naruto',
-      membro:
-        'Time 7 / Time Kakashi.',
-      foto: 'https://w7.pngwing.com/pngs/727/488/png-transparent-uzumaki-naruto-illustration-naruto-shippuden-ultimate-ninja-storm-2-naruto-uzumaki-naruto-shippuden-naruto-vs-sasuke-naruto-shippuden-manga-cartoons-fictional-character-thumbnail.png',
-    },
-    {
-      id: 2,
-      nome: 'Sakura',
-      membro:
-        'Time 7 / Time Kakashi.',
-      foto: 'http://imagenspng.com/wp-content/uploads/sakura-naruto-png-Imagem-com-fundo-removido-transparente-gratis-para-baixar.png',
-    },
-    {
-      id: 3,
-      nome: 'Sasuke',
-      membro:
-        'Time 7 / Time Kakashi.',
-      foto: 'https://i.pinimg.com/originals/bb/aa/b9/bbaab91dd08b913f7b46bea64f393dca.png',
-    },
-  ];
-  
+const Personagem = require('../models/Personagem');
 
-  const findPersonagemService = () => {
+
+// const personagem = [
+//     {
+//       id: 1,
+//       nome: 'Naruto',
+//       membro:
+//         'Time 7 / Time Kakashi.',
+//       foto: 'https://w7.pngwing.com/pngs/727/488/png-transparent-uzumaki-naruto-illustration-naruto-shippuden-ultimate-ninja-storm-2-naruto-uzumaki-naruto-shippuden-naruto-vs-sasuke-naruto-shippuden-manga-cartoons-fictional-character-thumbnail.png',
+//     },
+//     {
+//       id: 2,
+//       nome: 'Sakura',
+//       membro:
+//         'Time 7 / Time Kakashi.',
+//       foto: 'http://imagenspng.com/wp-content/uploads/sakura-naruto-png-Imagem-com-fundo-removido-transparente-gratis-para-baixar.png',
+//     },
+//     {
+//       id: 3,
+//       nome: 'Sasuke',
+//       membro:
+//         'Time 7 / Time Kakashi.',
+//       foto: 'https://i.pinimg.com/originals/bb/aa/b9/bbaab91dd08b913f7b46bea64f393dca.png',
+//     },
+//   ];
+
+  const findPersonagemService = async () => {
+    const personagem = await Personagem.find();
     return personagem;
   };
   
-  const findPersonagemByIdService = (id) => {
-    return personagem.find((personagens) => personagens.id == id);
+  const findPersonagemByIdService = async (id) => {
+    const personagem = await Personagem.findById(id);
+    return personagem;
+    // return personagem.find((personagens) => personagens.id == id);
   };
 
   const addPersonagemService = (personagens) => {
