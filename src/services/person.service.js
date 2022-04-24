@@ -25,8 +25,8 @@ const Personagem = require('../models/Personagem');
     return personagemUp;
   };
 
-  const deletePersonagemService = (id) => {
-    return personagem.splice(personagem.findIndex((personagens) => personagens.id == id), 1);
+  const deletePersonagemService = async (id) => {
+    return await Personagem.findByIdAndDelete(id);
   };
   
   module.exports = {

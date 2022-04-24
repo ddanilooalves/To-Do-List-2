@@ -46,34 +46,37 @@ const createPersonagemController = async (req, res) => {
   res.status(201).send(aff);
 };
 
-const updatePersonagemPaletaController = (req, res) => {
-  const param = Number(req.params.id);
+const updatePersonagemPaletaController = async (req, res) => {
+  const param = req.params.id;
 
-    if (!param) {
-      return res.status(400).send({ message: "ID inválido!" });
-    };
+  if (!mongoose.Types.ObjectId.isValid(param)) {
+    res.status(400).send({ message: "ID inválido!" });
+    return;
+  };
 
   const per = req.body;
 
-  if (!per 
-    || !per.id
+  if (!per
     || !per.nome
     || !per.membro
     || !per.foto
     ) {
     return res.status(400).send({ message: "Informe todos os campos do personagem completo!" });
   };
-  res.send(personagemService.updatePersonagemService(param, per));
+
+  const upd = await personagemService.updatePersonagemService(param, per);
+  res.send(upd);
 };
 
-const deletePersonagemController = (req, res) => {
-  const param = Number(req.params.id);
+const deletePersonagemController = async (req, res) => {
+  const param = req.params.id;
 
-  if (!param) {
-    return res.status(400).send({ message: "ID inválido!" });
+  if (!mongoose.Types.ObjectId.isValid(param)) {
+    res.status(400).send({ message: "ID inválido!" });
+    return;
   };
 
-  personagemService.deletePersonagemService(param);
+  await personagemService.deletePersonagemService(param);
   res.send({ message: 'Personagem deletado(a) com sucesso!' });
 };
 
