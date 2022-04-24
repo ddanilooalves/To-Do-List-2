@@ -6,12 +6,12 @@ const homePersonagemController = (req, res) => {
 };
 
 const findPersonagemController = async (req, res) => {
-  const personagem = await personagemService.findPersonagemService();
+  const allPersonagem = await personagemService.findPersonagemService();
 
-  if (personagem.length == 0) {
+  if (allPersonagem.length == 0) {
     return res.status(404).send({ message: "Não há nenhum personagem cadastrado!" });
   };
-  res.send(personagem);
+  res.send(allPersonagem);
 };
 
 const findPersonagemByIdController = async (req, res) => {
@@ -22,49 +22,49 @@ const findPersonagemByIdController = async (req, res) => {
     return;
   };
 
-  const sis = await personagemService.findPersonagemByIdService(param);
+  const idParam = await personagemService.findPersonagemByIdService(param);
 
-  if (!sis) {
+  if (!idParam) {
     return res.status(404).send({ message: "Personagem não foi encontrado!" });
   };
 
-  res.send(sis)
+  res.send(idParam)
 };
 
 const createPersonagemController = async (req, res) => {
-  const personagem = req.body;
+  const createPersonagem = req.body;
 
-  if (!personagem
-    || !personagem.nome
-    || !personagem.membro
-    || !personagem.foto
+  if (!createPersonagem
+    || !createPersonagem.nome
+    || !createPersonagem.membro
+    || !createPersonagem.foto
     ) {
     return res.status(400).send({ message: "Informe todos os campos personagem completo!" });
   };
 
-  const aff = await personagemService.createPersonagemService(personagem);
-  res.status(201).send(aff);
+  const goCreate = await personagemService.createPersonagemService(createPersonagem);
+  res.status(201).send(goCreate);
 };
 
 const updatePersonagemPaletaController = async (req, res) => {
-  const param = req.params.id;
+  const upParam = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(param)) {
+  if (!mongoose.Types.ObjectId.isValid(upParam)) {
     res.status(400).send({ message: "ID inválido!" });
     return;
   };
 
-  const per = req.body;
+  const upPerson = req.body;
 
-  if (!per
-    || !per.nome
-    || !per.membro
-    || !per.foto
+  if (!upPerson
+    || !upPerson.nome
+    || !upPerson.membro
+    || !upPerson.foto
     ) {
     return res.status(400).send({ message: "Informe todos os campos do personagem completo!" });
   };
 
-  const upd = await personagemService.updatePersonagemService(param, per);
+  const upd = await personagemService.updatePersonagemService(upParam, upPerson);
   res.send(upd);
 };
 
