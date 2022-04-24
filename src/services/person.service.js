@@ -7,7 +7,7 @@ const Personagem = require('../models/Personagem');
   
   const findPersonagemByIdService = async (id) => {
     const personagem = await Personagem.findById(id);
-    return personagem
+    return personagem;
   };
 
   const addPersonagemService = (personagens) => {
@@ -15,17 +15,14 @@ const Personagem = require('../models/Personagem');
     return "ok";
   };
 
-  const createPersonagemService = (newPersonagem) => {
-    const newId = personagem.length + 1;
-    newPersonagem.id = newId;
-    personagem.push(newPersonagem);
-    return newPersonagem;
+  const createPersonagemService = async (newPersonagem) => {
+    const nePersonagens = await Personagem.create(newPersonagem);
+    return nePersonagens;
   };
 
-  const updatePersonagemService = (id, personagemEdited) => {
-    personagemEdited['id'] = id;
-    personagem[personagem.findIndex((personagens) => personagens.id == id)] = personagemEdited;
-    return personagemEdited;
+  const updatePersonagemService = async (id, personagemEdited) => {
+    const personagemUp = await Personagem.findByIdAndUpdate(id, personagemEdited);
+    return personagemUp;
   };
 
   const deletePersonagemService = (id) => {

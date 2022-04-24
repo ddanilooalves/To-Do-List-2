@@ -1,21 +1,23 @@
 const personagemService = require('../services/person.service');
+const mongoose = require('mongoose');
 
 const homePersonagemController = (req, res) => {
   res.send("home personagens");
 };
 
 const findPersonagemController = async (req, res) => {
-  const perso = await personagemService.findPersonagemService();
-  if (perso.length == 0) {
+  const personagem = await personagemService.findPersonagemService();
+
+  if (personagem.length == 0) {
     return res.status(404).send({ message: "Não há nenhum personagem cadastrado!" });
   };
-  res.send(perso);
+  res.send(personagem);
 };
 
 const findPersonagemByIdController = async (req, res) => {
-  const param = Number(req.params.id);
+  const param = req.params.id;
 
-  if (!mongoose.types.ObjectId.isValid(param)) {
+  if (!mongoose.Types.ObjectId.isValid(param)) {
     res.status(400).send({ message: "ID inválido!" });
     return;
   };
@@ -29,11 +31,10 @@ const findPersonagemByIdController = async (req, res) => {
   res.send(sis)
 };
 
-const createPersonagemController = (req, res) => {
+const createPersonagemController = async (req, res) => {
   const personagem = req.body;
 
-  if (!personagem 
-    || !personagem.id
+  if (!personagem
     || !personagem.nome
     || !personagem.membro
     || !personagem.foto
@@ -41,8 +42,8 @@ const createPersonagemController = (req, res) => {
     return res.status(400).send({ message: "Informe todos os campos personagem completo!" });
   };
 
-  res.status(201).send(personagemService.createPersonagemService(personagem));
-
+  const aff = await personagemService.createPersonagemService(personagem);
+  res.status(201).send(aff);
 };
 
 const updatePersonagemPaletaController = (req, res) => {

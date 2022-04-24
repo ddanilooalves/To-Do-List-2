@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const PersonagemSchema = new mongoose.Schema({
-    id: { type: Number, required: true },
-    nome: { type: String, required: true },
-    membro: { type: String, required: true },
-    foto: { type: String, required: true },
+const PersonagemSchema = new mongoose.Schema ({
+    nome: { type: String, require: true },
+    membro: { type: String, require: true },
+    foto: { type: String, require: true },
   });
 
-const Personagem = mongoose.model('personagem', PersonagemSchema);
+const Personagem = mongoose.model('personagens', PersonagemSchema);
 
 module.exports = Personagem;
